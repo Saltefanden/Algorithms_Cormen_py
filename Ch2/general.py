@@ -49,3 +49,4 @@ class Array:
         self.length = length
         self.array = [rd.randrange(0,100) for i in range(length)]
 
+'hak mig i kussen'
