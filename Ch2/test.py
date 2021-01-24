@@ -1,12 +1,5 @@
 # -*- coding: utf-8 -*-
 """
-Created on Sun Jan 24 20:24:56 2021
-
-@author: NMDL
-"""
-
-# -*- coding: utf-8 -*-
-"""
 Created on Sun Jan 24 13:45:58 2021
 
 @author: nickl
