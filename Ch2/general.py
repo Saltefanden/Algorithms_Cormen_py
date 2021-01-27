@@ -12,12 +12,18 @@ class Array:
 
     trainingArray = [5, 2, 4, 6, 1, 3]
 
-
     def __init__(self, array=trainingArray):
         self.array = array
         self.length = len(self.array)
 
+    
+    # Generate training data
+    def random(self, length):
+        self.length = length
+        self.array = [rd.randrange(0,100) for i in range(length)]
 
+
+    # Implement algorithms described 
     def insertion_sort(self, reverse = False):
         for i in range(1, self.length):
             key = self.array[i]
@@ -40,13 +46,8 @@ class Array:
                 return i
         return None
 
+
     def merge_sort(self):
         self.array 
 
 
-
-    def random(self, length):
-        self.length = length
-        self.array = [rd.randrange(0,100) for i in range(length)]
-
-'hak mig i kussen'
