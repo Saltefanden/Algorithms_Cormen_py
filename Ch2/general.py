@@ -9,7 +9,8 @@ from os import path
 import random as rd
 
 class Array:
-
+    '''The class handles arrays and the methods on these as described in 
+    the second chapter of CORMEN '''
     trainingArray = [5, 2, 4, 6, 1, 3]
 
     def __init__(self, array=trainingArray):
