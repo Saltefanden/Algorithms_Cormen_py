@@ -38,7 +38,7 @@ class Array:
                     self.array[j+1] = self.array[j]
                     j -= 1
             self.array[j+1] = key
-        print(self.array)
+        return self.array
 
 
     def search(self, v):
@@ -51,4 +51,40 @@ class Array:
     def merge_sort(self):
         self.array 
 
+# Monkey patching is not available for built in types such as list (list.ins_sort = insertion_sort)
+# Thus I create a subclass of list
+class myList(list):
+    def __init__(self, the_list):
+        super().__init__(the_list)
+    
+    def insertion_sort(self):
+        for i in range(1,self.__len__()):
+            key = self[i]
+            j = i-1
+            while j>=0:
+                if self[j] > key:
+                    self[j+1] = self[j]
+                    self[j] = key
+                    j -= 1
+                else:
+                    self[j+1] = key
+                    break
+        return self
 
+
+
+
+def main():
+    try:
+        assert Array([2,3,1,4,5]).insertion_sort() == [1,2,3,4,5], "Ins sort does not sort properly"
+        assert Array([2,3,1,4,5]).insertion_sort(reverse = True) == [5,4,3,2,1], "Ins sort does not reverse sort properly"
+        assert Array([2,3,1,4,5]).search(4) == 3, "Search does not search properly"
+        assert myList([1,2,3,2,1,0,1]).insertion_sort() == [0,1,1,1,2,2,3], "Ins sort does not sort properly"
+    except Exception as ex:
+        print(ex)
+    else:
+        print("Code executed with return value 0")
+    
+
+if __name__ == '__main__':
+    main()
