@@ -5,49 +5,6 @@ Created on Sun Jan 24 13:45:58 2021
 @author: nickl
 """
 
-from os import path
-import random as rd
-
-class Array:
-    '''The class handles arrays and the methods on these as described in 
-    the second chapter of CORMEN '''
-    trainingArray = [5, 2, 4, 6, 1, 3]
-
-    def __init__(self, array=trainingArray):
-        self.array = array
-        self.length = len(self.array)
-
-    
-    # Generate training data
-    def random(self, length):
-        self.length = length
-        self.array = [rd.randrange(0,100) for i in range(length)]
-
-
-    # Implement algorithms described 
-    def insertion_sort(self, reverse = False):
-        for i in range(1, self.length):
-            key = self.array[i]
-            j = i-1
-            if not reverse:
-                while j+1 and self.array[j] > key:
-                    self.array[j+1] = self.array[j]
-                    j -= 1
-            else:
-                while j+1 and self.array[j] < key:
-                    self.array[j+1] = self.array[j]
-                    j -= 1
-            self.array[j+1] = key
-        return self.array
-
-
-    def search(self, v):
-        for i in range(self.length):
-            if self.array[i] == v:
-                return i
-        return None
-
-
 # Monkey patching is not available for built in types such as list (list.ins_sort = insertion_sort)
 # Thus I create a subclass of list
 class myList(list):
@@ -87,6 +44,33 @@ class myList(list):
             self[i], self[minidx] = minval, self[i]         # c7 * (n-2)
         return self
 
+    @staticmethod
+    def merge(arr1, arr2):
+        returnlist = []
+        i = j = 0
+        while True:
+            if i < len(arr1) and j < len(arr2):
+                if arr1[i] < arr2[j]:
+                    returnlist.append(arr1[i])
+                    i += 1
+                else:
+                    returnlist.append(arr2[j])
+                    j += 1
+            else:
+                returnlist.extend(arr1[i:] + arr2[j:])#omskriv da du ikke tømmer arr1 og arr2
+                break
+        return returnlist
+    
+    def merge_sort(self):
+        returnarray = []
+        size = self.__len__()
+        if size-1: #såfremt den ikke er hammerkort yo
+            rhs = myList(self[:size//2]).merge_sort()
+            lhs = myList(self[size//2:]).merge_sort()
+            returnarray = myList.merge(rhs, lhs)
+        else:
+            returnarray = self
+        return myList(returnarray)
 
 class binarylist(list):
     def __init__(self, *args):
@@ -134,16 +118,10 @@ class binarylist(list):
         return runsum
             
 
-    
-
 def test_Array_and_myList():
     try:
-        assert Array([2,3,1,4,5]).insertion_sort() == [1,2,3,4,5], "Ins sort does not sort properly"
-        assert Array([2,3,1,4,5]).insertion_sort(reverse = True) == [5,4,3,2,1], "Ins sort does not reverse sort properly"
-        assert Array([2,3,1,4,5]).search(4) == 3, "Search does not search properly"
         assert myList([1,2,3,2,1,0,1]).insertion_sort() == [0,1,1,1,2,2,3], "Ins sort does not sort properly"
         assert myList([1,2,3,2,1,0,1]).insertion_sort(reverse=True) == [3,2,2,1,1,1,0], "Ins sort does not reverse sort properly"
-        assert myList([1,0]).insertion_sort() == [0,1], "Ins sort does not sort properly"
         assert myList([0,0]).insertion_sort() == [0,0], "Ins sort does not sort properly"
         assert myList([0,1,2,3,4,5,-6,7,8]).search(-6) == 6, "Search does not return proper index"
         assert myList([0,1,2,3,4,5,-6,7,8]).search(-61) == None, "Search does not return None if value not present"
@@ -177,9 +155,26 @@ def test_selectionsort():
         print("Code executed with return value 0")
 
 
+def test_merge():
+    try:
+        assert myList.merge([1,2,3],[2,3,4]) == [1,2,2,3,3,4], "Merge malfunctions 1"
+        assert myList.merge([1],[]) == [1], "Merge malfunctions 2"
+        assert myList.merge([],[]) == [], "Merge malfunctions 3"
+        assert myList.merge([2,4,6,8,8],[]) == [2,4,6,8,8], "Merge malfunctions 4"
+        assert myList([1,2,3,2,1,0,1]).merge_sort() == [0,1,1,1,2,2,3], "Mergesort malfunction 1"
+        assert myList([1]).merge_sort() == [1], "Mergesort malfunction 2"
+        assert myList([1,0,0,0,0]).merge_sort() == [0,0,0,0,1], "Mergesort malfunction 3"
+    except Exception as ex:
+        print(ex)
+    else:
+        print("Code executed with return value 0")    
+
 
 def main():
-    test_selectionsort()
+    #test_Array_and_myList()
+    #test_binarylist()
+    #test_selectionsort()
+    test_merge()
 
 if __name__ == '__main__':
     main()
