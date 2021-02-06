@@ -48,9 +48,6 @@ class Array:
         return None
 
 
-    def merge_sort(self):
-        self.array 
-
 # Monkey patching is not available for built in types such as list (list.ins_sort = insertion_sort)
 # Thus I create a subclass of list
 class myList(list):
