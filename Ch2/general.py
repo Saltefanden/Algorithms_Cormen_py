@@ -79,6 +79,17 @@ class myList(list):
                 return i
         return None
 
+    
+    def selection_sort(self):
+        for i in range(self.__len__()-1):                   # c1 * (n-1)
+            minidx = i                                      # c2 * (n-2)
+            minval = self[i]                                # c3 * (n-2)
+            for idx, val in enumerate(self[i:]):            # c4 * sum( ti , i = 1..n-1),    ti = n-i gives n**2 running time
+                if val < minval:                            # c5 * --||--   
+                    minval, minidx = val, idx+i             # c6 * et eller andet hvor ofte det er sandt
+            self[i], self[minidx] = minval, self[i]         # c7 * (n-2)
+        return self
+
 
 class binarylist(list):
     def __init__(self, *args):
@@ -159,8 +170,19 @@ def test_binarylist():
         print("Code executed with return value 0")
 
 
+def test_selectionsort():
+    try:
+        assert myList([1,2,3,2,1,0,1]).selection_sort() == [0,1,1,1,2,2,3], "Sel sort does not sort properly"
+        assert myList([1,2,3,2,1,0,1,0]).selection_sort() == [0,0,1,1,1,2,2,3], "Sel sort does not sort properly"
+    except Exception as ex:
+        print(ex)
+    else:
+        print("Code executed with return value 0")
+
+
+
 def main():
-    test_binarylist()
+    test_selectionsort()
 
 if __name__ == '__main__':
     main()
