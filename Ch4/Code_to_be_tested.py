@@ -55,7 +55,7 @@ class myList(list):
     def merge_sort(self):
         returnarray = []
         size = len(self)
-        if size-1: #såfremt den ikke er hammerkort yo
+        if size>1: #såfremt den ikke er hammerkort yo
             rhs = myList(self[:size//2]).merge_sort()
             lhs = myList(self[size//2:]).merge_sort()
             returnarray = myList.merge(rhs, lhs)
