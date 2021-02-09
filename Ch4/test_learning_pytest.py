@@ -109,3 +109,45 @@ def test_my_fruit_in_basket(my_fruit, fruit_basket):
 #     def _cube_fruit(self):
 #         for fruit in self.fruit:
 #             fruit.cube()
+
+
+
+"""Last idea is to add the unittest to both implementation algorithms following this example https://stackoverflow.com/questions/29939842/how-to-reuse-the-same-tests-to-test-different-implementations
+Use parameterized tests with your tested functions as a parameter.
+
+For example, using ddt module for parameterized testing:
+
+def sum1(list1):
+    return sum(list1)
+
+def sum2(list1):
+    res = 0
+    for x in list1:
+        res += x
+    return res
+
+import unittest
+from ddt import ddt, data
+
+@ddt
+class SumTest(unittest.TestCase):
+
+    @data(sum1, sum2)
+    def test_sum(self, param):
+        self.assertEqual(param([1, 2, 3]), 6)
+
+
+if __name__ == '__main__':
+    unittest.main()
+In this example, you have two functions "sum1" and "sum2" implementing the same algorithm: summing of list elements. In your test class, you have only one testing method "test_sum" that takes the concrete summing function as a parameter. The two summing functions are specified as a list of values for a parameterized test.
+
+You can install "ddt" with pip:
+
+__________________________________________
+
+Remember you can have multiple parameters in your fixtures, and they will run all combinations of both
+SEE last line above this paragraph https://docs.pytest.org/en/stable/parametrize.html#basic-pytest-generate-tests-example
+
+
+
+"""
