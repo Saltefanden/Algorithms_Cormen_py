@@ -31,7 +31,24 @@
 #     print(lol)
 
 #%%  Det her virker til gengæld på pytest også, så det er muligt at lave monkey patchede tests uden at gøre mere for det. 
-from Code_to_be_tested import myList
+# from Code_to_be_tested import myList
+
+# def addone(my_list):
+#     returnlist = []
+#     for i, val in enumerate(my_list):
+#         returnlist.append(val +1) 
+#     return returnlist
+
+# myList.addone = addone 
+
+
+# %% Det her er samlet set bedst? Vi har nu fjernet alle tomme __init__ filer som pytest ikke kan lide og som heller ikke gør nogen forskel siden python 3.x tidligt
+
+import sys
+
+sys.path.insert(1,'../Ch2')
+
+from general import myList 
 
 def addone(my_list):
     returnlist = []
